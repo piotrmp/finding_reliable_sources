@@ -33,7 +33,7 @@ The evaluation relies on querying the search index with each context from the te
 - ```evaluator/evaluation_wiki_sparse.py```
 - ```evaluator/evaluation_fever_dense.py```
 - ```evaluator/evaluation_fever_sparse.py```
-- 
+
 They differ in terms of the context representation (dense or sparse) and test data (Wikipedia-based CSP or FEVER-FRS). Depending on the provided input data (e.g. embeddings used while indexing), a variety of experiments can be performed, including those included in the article. The FEVER-FRS data can be downloaded from the [Zenodo repository](https://doi.org/10.5281/zenodo.6539087). The evaluation measures include procedures published by [Taylor Smith](https://gist.github.com/tgsmith61591/d8aa96ac7c74c24b33e4b0cb967ca519).
 
 ## Licence
