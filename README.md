@@ -18,6 +18,10 @@ This task is performed by the ```distiller/do_distill.py``` script. It takes a c
 
 To index the reliable sources, we need to:
 1. Compute the sentence embeddings for the contexts in the training data. This is performed by ```embedder/do_embed.py```. You can choose one of three embedding models: [Sentence-BERT](https://www.sbert.net), averaged [GloVe](https://nlp.stanford.edu/projects/glove/) or [Universal Sentence Encoder](https://tfhub.dev/google/universal-sentence-encoder/4).
-2. Create a search index for finding the nearest neighbour in the embedding space, happening through ```dense_indexer/don_index.py```. This employs [NGT](https://github.com/yahoojapan/NGT), which you will need to install beforehand.
+2. Create a search index for finding the nearest neighbour in the embedding space, happening through ```dense_indexer/do_index.py```. This employs [NGT](https://github.com/yahoojapan/NGT), which you will need to install beforehand.
+
+**Creating a search index using sparse vector represnetations**
+
+This is an alternative to the previous approach, using bag-of-words representation ranked through Okapi BM25 function. The implementation in in ```sparse_indexer/do_index.py``` is indexing the source psudo-documents in [Elasticsearch](https://www.elastic.co/elasticsearch/) (you will need it installed before running the code). 
 
 ## Licence
