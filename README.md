@@ -12,6 +12,12 @@ This is done through the code in the ```wiki_harverster``` package. The ```do_ha
 
 **Converting a citation corpus to claim-source pairing dataset**
 
-This task is performed by the ```distiller/do_distill.py``` script. It takes a citation corpus as an input and returns a CSP dataset. You will need to choose one of the available context generation techniques: ```sentence```, ```title+sentence``` or ```sentence+sentence```. See the article to understand what these variants correspond to and why the choice matters. You can also download all three variants of the dataset from [Zenodo](https://doi.org/10.5281/zenodo.6539087).
+This task is performed by the ```distiller/do_distill.py``` script. It takes a citation corpus as an input and returns a CSP dataset. You will need to choose one of the available context generation techniques: ```sentence```, ```title+sentence``` or ```sentence+sentence```. See the article to understand what these variants correspond to and why the choice matters. This module also relies on the procedure extracting an identifier from a source description, included in ```source_explorer/normalise.py```. You can also download all three variants of the CSP dataset from [Zenodo](https://doi.org/10.5281/zenodo.6539087).
+
+**Creating a search index using dense vector representations**
+
+To index the reliable sources, we need to:
+1. Compute the sentence embeddings for the contexts in the training data. This is performed by ```embedder/do_embed.py```. You can choose one of three embedding models: [Sentence-BERT](https://www.sbert.net), averaged [GloVe](https://nlp.stanford.edu/projects/glove/) or [Universal Sentence Encoder](https://tfhub.dev/google/universal-sentence-encoder/4).
+2. Create a search index for finding the nearest neighbour in the embedding space, happening through ```dense_indexer/don_index.py```. This employs [NGT](https://github.com/yahoojapan/NGT), which you will need to install beforehand.
 
 ## Licence
