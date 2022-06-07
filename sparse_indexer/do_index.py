@@ -11,7 +11,6 @@ index = "test"
 prefix = sys.argv[1]
 sentencePath = prefix + '/sentences/2021s'
 metaPath = prefix + '/corpus/2021/metaTrain.tsv'
-claimsPath = prefix + '/representations/claims/2021s'
 
 client = Elasticsearch(server)
 print(client.ping())
