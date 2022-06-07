@@ -22,6 +22,17 @@ To index the reliable sources, we need to:
 
 **Creating a search index using sparse vector represnetations**
 
-This is an alternative to the previous approach, using bag-of-words representation ranked through Okapi BM25 function. The implementation in in ```sparse_indexer/do_index.py``` is indexing the source psudo-documents in [Elasticsearch](https://www.elastic.co/elasticsearch/) (you will need it installed before running the code). 
+This is an alternative to the previous approach, using bag-of-words representation ranked through Okapi BM25 function. The implementation in in ```sparse_indexer/do_index.py``` is indexing the source psudo-documents in [Elasticsearch](https://www.elastic.co/elasticsearch/) (you will need it installed before running the code). The default function for generating psudo-documents in ```sparse_indexer/source_documents.py``` is simply concatenating all contexts citing a given source, but this could be extended to claims or noun chunks, evaluated in the article.
+
+**Evaluating**
+
+The evaluation relies on querying the search index with each context from the test data and veryfying, to what extent the returned sources overlap with those expected. In this repository, evaluation scripts for the four basic scenarios are included:
+- ```evaluator/evaluation_wiki_dense.py```
+- ```evaluator/evaluation_wiki_sparse.py```
+- ```evaluator/evaluation_fever_dense.py```
+- ```evaluator/evaluation_fever_sparse.py```
+They differ in terms of the context representation (dense or sparse) and test data (Wikipedia-based CSP or FEVER-FRS). Depending on the provided input data (e.g. embeddings used while indexing) and paramaters (e.g. using SUPPORTS or REFUTES claims), a variety of experiments can be performed, including those included in the article. The FEVER-FRS data can be downloaded from the [Zenodo repository](https://doi.org/10.5281/zenodo.6539087). The evaluation measures include procedures published by [Taylor Smith](https://gist.github.com/tgsmith61591/d8aa96ac7c74c24b33e4b0cb967ca519).
 
 ## Licence
+
+The source code is released under the [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html) licence.
