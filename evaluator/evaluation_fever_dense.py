@@ -4,10 +4,11 @@ from builtins import print
 
 import numpy as np
 
+from embedder.encoder import Encoder
 import evaluator.evaluation_tools as eval_tools
 import evaluator.ranking as rank
 from dense_indexer.index import Index
-from embedder.encoder import Encoder
+
 
 pathPrefix = sys.argv[1]
 
@@ -28,7 +29,7 @@ index = Index(indexPath, sentencePath, mappingPath, metaPath, encoder)
 index.load()
 
 sim_thresh = 0.8
-n_search_results_list = [1]
+n_search_results_list = [100]
 k_precision = 5
 k_ndcg = 5
 sentences_label = 'REFUTES'  # 'SUPPORTS' #
@@ -48,16 +49,16 @@ for sentence in sentences_list:
 
 wikiFEVERpageTitle_2_lines: dict
 wikiPageTile_2_linesAndSources: dict
-claim_2_evidences: dict
+claim_2_evidences: list
 
 
 def claim_2_evidences_lines_read(claim_2_evidences_csv: str):
-    claim_2_evidences = dict()
+    claim_2_evidences = list()
     for line in open(claim_2_evidences_csv):
         parts = line.strip().split('\t')
         claim = str(parts[0])
         actual_sources = list(parts[1:])
-        claim_2_evidences[claim] = actual_sources
+        claim_2_evidences.append((claim, actual_sources))
     return claim_2_evidences
 
 
@@ -88,8 +89,10 @@ for n_search_results in n_search_results_list:
     avg_prec_list = []
     cnt = 0
     
-    for claim, actual_sources in claim_2_evidences.items():
-        results = index.search(claim, n_search_results)
+    for claim_actualSources in claim_2_evidences:
+        query = claim_actualSources[0]
+        actual_sources = claim_actualSources[1]
+        results = index.search(query, n_search_results)
         predicted_sources = []
         for result in results:
             parts2 = result.split('\t')

@@ -26,8 +26,8 @@ print(client.ping())
 
 sim_thresh = 0.8
 n_search_results_list = [100]
-k_precision = 10
-k_ndcg = 10
+k_precision = 5
+k_ndcg = 5
 sentences_label = 'REFUTES'  # 'SUPPORTS' #
 
 ### paths to maps in csv form:
@@ -45,16 +45,16 @@ for sentence in sentences_list:
 
 wikiFEVERpageTitle_2_lines: dict
 wikiPageTile_2_linesAndSources: dict
-claim_2_evidences: dict
+claim_2_evidences: list
 
 
 def claim_2_evidences_lines_read(claim_2_evidences_csv: str):
-    claim_2_evidences = dict()
+    claim_2_evidences = list()
     for line in open(claim_2_evidences_csv):
         parts = line.strip().split('\t')
         claim = str(parts[0])
         actual_sources = list(parts[1:])
-        claim_2_evidences[claim] = actual_sources
+        claim_2_evidences.append((claim, actual_sources))
     return claim_2_evidences
 
 
@@ -84,11 +84,12 @@ for n_search_results in n_search_results_list:
     ndcg_list = []
     avg_prec_list = []
     
-    for claim, actual_sources in claim_2_evidences.items():
-        query = claim
+    for claim_actualSources in claim_2_evidences:
+        query = claim_actualSources[0]
+        actual_sources = claim_actualSources[1]
         predicted_sources = []
         try:
-            predicted_sources = findPredictedSources(query, client, index, n_search_results)
+            predicted_sources = findPredictedSources(query, client, index, n_search_results) #TODO: Zrobic case study: i zbadac czemu dostajemy rozne wyniki
         except Exception as e:
             print("EXCEPTION for query=" + query)
             traceback.print_exc(file=sys.stdout)

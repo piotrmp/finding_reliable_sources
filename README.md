@@ -1,6 +1,6 @@
 # Finding Reliable Sources
 
-This repository contains the source code accompanying our study on the task of Finding Reliable Sources (FRS). The challenge of FRS is to, given a short textual claim (e.g. *Smoking tobacco is good for your helath.*), recommend a set of reliable sources (e.g. scholarly papers, publications from established institutions) that could support or refute the claim. The results of this study were described in the article *[Countering Disinformation by Finding Reliable Sources: a Citation-Based Approach](TODO)* presented at the IJCNN 2022 conference in Padoa, Italy. The datasets created for this work are published on Zenodo as [Wikipedia Complete Citation Corpus](https://doi.org/10.5281/zenodo.6539054) and [FRS Evaluation Datasets](https://doi.org/10.5281/zenodo.6539087).
+This repository contains the source code accompanying our study on the task of Finding Reliable Sources (FRS). The challenge of FRS is to, given a short textual claim (e.g. *Smoking tobacco is good for your health.*), recommend a set of reliable sources (e.g. scholarly papers, publications from established institutions) that could support or refute the claim. The results of this study were described in the article *[Countering Disinformation by Finding Reliable Sources: a Citation-Based Approach](TODO)* presented at the IJCNN 2022 conference in Padoa, Italy. The datasets created for this work are published on Zenodo as [Wikipedia Complete Citation Corpus](https://doi.org/10.5281/zenodo.6539054) and [FRS Evaluation Datasets](https://doi.org/10.5281/zenodo.6539087).
 
 The research was done within the [HOMADOS](https://homados.ipipan.waw.pl/) project at the [Institute of Computer Science](https://ipipan.waw.pl/), Polish Academy of Sciences.
 
@@ -15,6 +15,10 @@ This is done through the code in the ```wiki_harverster``` package. The ```do_ha
 **Converting a citation corpus to claim-source pairing dataset**
 
 This task is performed by the ```distiller/do_distill.py``` script. It takes a citation corpus as an input and returns a CSP dataset. You will need to choose one of the available context generation techniques: ```sentence```, ```title+sentence``` or ```sentence+sentence```. See the article to understand what these variants correspond to and why the choice matters. This module also relies on the procedure extracting an identifier from a source description, included in ```source_explorer/normalise.py```. You can also download all three variants of the CSP dataset from [Zenodo](https://doi.org/10.5281/zenodo.6539087).
+
+**Extracting FEVER-FRS evaluation dataset**
+
+This step involves matching the evidence from the [FEVER shared task](https://fever.ai) with the sentences in the CSP dataset. The process is performed by the ```fever_generator/do_generate_fever_frs.py``` script, which requires the CSP dataset (*sentence* variant) and the [FEVER Dataset](https://fever.ai/dataset/fever.html) to run. You can skip this step and download the full dataset from [Zenodo](https://doi.org/10.5281/zenodo.6539087).
 
 **Creating a search index using dense vector representations**
 
